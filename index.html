@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Wedding of Dijah & Irul</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Cinematic & Elegant) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Playfair+Display:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #111111;
+            --text-main: #e5e5e5;
+            --text-muted: #9ca3af;
+            --accent-gold: #D4AF37;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Tipografi Khusus */
+        .font-cinematic { font-family: 'Cinzel', serif; }
+        .font-serif-elegant { font-family: 'Playfair Display', serif; }
+
+        /* Background transparan agar video terlihat */
+        .bg-transparent-dark {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(2px);
+        }
+        
+        .bg-gradient-dark {
+            background: linear-gradient(to bottom, rgba(17,17,17,0.4) 0%, rgba(17,17,17,0.9) 100%);
+        }
+
+        /* Menu Hamburger & Overlay */
+        #menu-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 8px;
+            width: 45px; height: 45px; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 5px; cursor: pointer;
+            transition: all 0.3s; display: none;
+        }
+        #menu-btn span {
+            display: block; width: 20px; height: 1.5px; background-color: #fff;
+            transition: all 0.3s;
+        }
+        #menu-btn.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        #menu-btn.active span:nth-child(2) { opacity: 0; }
+        #menu-btn.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        #menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(17, 17, 17, 0.98); z-index: 999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: all 0.5s ease;
+        }
+        #menu-overlay.open { opacity: 1; pointer-events: auto; }
+        .menu-link {
+            font-family: 'Cinzel', serif; font-size: 1.5rem; color: #fff;
+            margin: 15px 0; letter-spacing: 0.2em; text-transform: uppercase;
+            opacity: 0; transform: translateY(20px); transition: all 0.4s ease;
+        }
+        #menu-overlay.open .menu-link { opacity: 1; transform: translateY(0); }
+        .menu-link:nth-child(1) { transition-delay: 0.1s; }
+        .menu-link:nth-child(2) { transition-delay: 0.2s; }
+        .menu-link:nth-child(3) { transition-delay: 0.3s; }
+        .menu-link:nth-child(4) { transition-delay: 0.4s; }
+        .menu-link:nth-child(5) { transition-delay: 0.5s; }
+
+        /* Cover Layar Penuh */
+        #cover-page {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 9999;
+            background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+            padding: 10vh 0; transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #cover-page::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 100%); z-index: 1;
+        }
+        .cover-content { position: relative; z-index: 2; width: 100%; text-center; }
+
+        /* Tombol Transparan ala Video */
+        .btn-cinematic {
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.4); color: #fff;
+            padding: 12px 35px; border-radius: 30px; font-size: 0.75rem;
+            letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s;
+        }
+        .btn-cinematic:active { transform: scale(0.95); background: rgba(255,255,255,0.2); }
+
+        /* Elemen UI Dasar */
+        .section-title {
+            font-family: 'Cinzel', serif; letter-spacing: 0.3em;
+            text-transform: uppercase; font-size: 1.5rem; margin-bottom: 2rem;
+            text-align: center; color: #fff;
+        }
+
+        .profile-img-container {
+            width: 100%; height: 60vh; position: relative; overflow: hidden; margin-bottom: 1.5rem;
+        }
+        .profile-img-container img {
+            width: 100%; height: 100%; object-fit: cover; object-position: center top;
+            filter: grayscale(20%) contrast(1.1);
+        }
+        .profile-img-container::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(to top, rgba(17,17,17,1) 0%, transparent 100%);
+        }
+
+        .input-cinematic {
+            background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2);
+            color: white; padding: 10px 0; width: 100%; border-radius: 0;
+            font-family: 'Montserrat', sans-serif; font-size: 0.9rem; transition: border-color 0.3s;
+        }
+        .input-cinematic:focus { outline: none; border-bottom-color: var(--accent-gold); }
+        .input-cinematic::placeholder { color: rgba(255,255,255,0.3); }
+
+        .masonry-grid { column-count: 2; column-gap: 10px; }
+        .masonry-item { break-inside: avoid; margin-bottom: 10px; border-radius: 4px; overflow: hidden; }
+        .masonry-item img { width: 100%; display: block; filter: grayscale(30%); transition: 0.5s; }
+        .masonry-item img:hover { filter: grayscale(0%); transform: scale(1.05); }
+
+        /* Music control */
+        .music-btn {
+            position: fixed; bottom: 30px; right: 20px; z-index: 900;
+            width: 40px; height: 40px; background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; color: #fff;
+            backdrop-filter: blur(5px); animation: spin 4s linear infinite; display: none;
+        }
+        .music-paused { animation-play-state: paused; opacity: 0.5; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .fade-line { width: 1px; height: 50px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.5), transparent); margin: 20px auto; }
+
+        /* Animasi Mouse Scroll */
+        .mouse-icon {
+            width: 24px; height: 36px; border: 2px solid rgba(255,255,255,0.6);
+            border-radius: 12px; position: relative; margin: 0 auto;
+        }
+        .mouse-wheel {
+            width: 2px; height: 6px; background: #D4AF37; position: absolute;
+            top: 6px; left: 50%; transform: translateX(-50%); border-radius: 2px;
+            animation: scroll-wheel 1.5s infinite;
+        }
+        @keyframes scroll-wheel {
+            0% { top: 6px; opacity: 1; }
+            100% { top: 20px; opacity: 0; }
+        }
+        #scroll-guide {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .hide-scroll-guide {
+            opacity: 0 !important;
+            pointer-events: none;
+            transform: translate(-50%, 20px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Video Background -->
+    <div class="fixed inset-0 w-full h-full z-[-2] bg-black overflow-hidden">
+        <!-- GANTI NAMA_FILE_VIDEO_ANDA.mp4 dengan link video background Anda -->
+        <video id="bg-video" muted playsinline class="w-full h-full object-cover opacity-0 transition-opacity duration-2000">
+            <source src="NAMA_FILE_VIDEO_ANDA.mp4" type="video/mp4">
+        </video>
+        <!-- Overlay gelap agar teks tetap terbaca -->
+        <div class="absolute inset-0 bg-black/60 z-[-1]"></div>
+    </div>
+
+    <!-- Audio (Lagu Pengiring) -->
+    <audio id="bg-music" loop>
+        <source src="lagu.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Floating Music Btn -->
+    <div id="music-btn" class="music-btn" onclick="toggleMusic()">
+        <i class="fas fa-compact-disc"></i>
+    </div>
+
+    <!-- Floating Hamburger Btn -->
+    <div id="menu-btn" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </div>
+
+    <!-- Scroll Guide (Panduan Scroll Muncul setelah klik Buka Undangan) -->
+    <div id="scroll-guide" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-50 opacity-0 pointer-events-none">
+        <span class="text-[0.6rem] tracking-[0.2em] uppercase text-gray-300 mb-2 font-light">Scroll ke Bawah</span>
+        <div class="mouse-icon"><div class="mouse-wheel"></div></div>
+        <i class="fas fa-chevron-down mt-2 animate-bounce text-gray-400 text-sm"></i>
+    </div>
+
+    <!-- Fullscreen Menu Overlay -->
+    <div id="menu-overlay">
+        <a href="#mempelai" class="menu-link" onclick="toggleMenu()">The Couple</a>
+        <a href="#journey" class="menu-link" onclick="toggleMenu()">Journey of Love</a>
+        <a href="#event" class="menu-link" onclick="toggleMenu()">Save The Date</a>
+        <a href="#gallery" class="menu-link" onclick="toggleMenu()">Our Moment</a>
+        <a href="#rsvp" class="menu-link" onclick="toggleMenu()">RSVP & Wishes</a>
+    </div>
+
+    <!-- 1. COVER SCREEN -->
+    <div id="cover-page">
+        <div class="cover-content text-center pt-10" data-aos="fade-down" data-aos-duration="1500">
+            <p class="text-[0.6rem] tracking-[0.4em] uppercase text-gray-300 mb-4">The Wedding Of</p>
+            <h1 class="font-cinematic text-5xl md:text-6xl text-white tracking-widest mb-2" data-aos="zoom-in" data-aos-delay="200">DIJAH & IRUL</h1>
+            <p class="font-serif-elegant text-sm text-gray-400 italic" data-aos="fade-up" data-aos-delay="400">Sabtu, 22 Agustus 2026</p>
+        </div>
+
+        <div class="cover-content text-center pb-10" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="600">
+            <p class="text-xs text-gray-400 mb-2 font-light">Yth. Bapak/Ibu/Saudara/i</p>
+            <p id="guest-name" class="text-lg font-cinematic text-white mb-6 tracking-widest border-b border-gray-600 inline-block pb-1">Tamu Undangan</p>
+            <p class="text-xs text-gray-400 font-light max-w-xs mx-auto mb-8 leading-relaxed">Tanpa mengurangi rasa hormat, kami mengundang Anda untuk menghadiri acara pernikahan kami.</p>
+            
+            <button onclick="openInvitation()" class="btn-cinematic" data-aos="zoom-in" data-aos-delay="800">Buka Undangan</button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content" class="hidden relative">
+        
+        <!-- Kutipan Ayat -->
+        <section class="min-h-[60vh] flex items-center justify-center text-center px-6 py-20 bg-transparent-dark">
+            <div class="relative z-10 max-w-2xl" data-aos="fade-up" data-aos-duration="1500">
+                <i class="fas fa-quote-right text-2xl text-[#D4AF37] mb-6 opacity-70"></i>
+                <p class="font-serif-elegant text-sm md:text-base leading-loose text-gray-200 mb-6 italic" data-aos="fade-in" data-aos-delay="300" data-aos-duration="1500">
+                    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang..."
+                </p>
+                <p class="text-[0.65rem] tracking-[0.2em] uppercase text-gray-400" data-aos="fade-up" data-aos-delay="500">Q.S Ar-Rum: 21</p>
+            </div>
+        </section>
+
+        <!-- THE BRIDE -->
+        <section id="mempelai" class="pt-10 pb-0 bg-gradient-dark">
+            <div data-aos="fade-right" data-aos-duration="1200">
+                <div class="profile-img-container shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=800&auto=format&fit=crop" alt="The Bride" data-aos="zoom-in-up" data-aos-duration="1500">
+                </div>
+                <div class="text-center px-6 -mt-20 relative z-10 pb-16">
+                    <p class="text-[0.6rem] tracking-[0.3em] text-gray-400 uppercase mb-2" data-aos="fade-up">The Bride</p>
+                    <h2 class="font-cinematic text-3xl md:text-4xl text-[#D4AF37] mb-2 tracking-widest" data-aos="fade-up" data-aos-delay="200">Siti Khodijah Dalimunthe<br><span class="text-lg">M.Pd</span></h2>
+                    <div class="fade-line" data-aos="fade-in" data-aos-delay="300"></div>
+                    <p class="text-xs text-gray-400 font-light mb-1" data-aos="fade-up" data-aos-delay="400">Putri dari</p>
+                    <p class="font-serif-elegant text-sm text-gray-300" data-aos="fade-up" data-aos-delay="500">Bapak Drs. Cambong Dalimunthe<br>& Ibu Roslaini</p>
+                    <a href="#" class="inline-block mt-4 text-[0.7rem] border border-gray-600 rounded-full px-4 py-1 text-gray-400 hover:text-[#D4AF37] transition" data-aos="zoom-in" data-aos-delay="600"><i class="fab fa-instagram mr-2"></i>@khodijah</a>
+                </div>
+            </div>
+            
+            <!-- THE GROOM -->
+            <div data-aos="fade-left" data-aos-duration="1200" class="mt-10">
+                <div class="profile-img-container shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=800&auto=format&fit=crop" alt="The Groom" data-aos="zoom-in-up" data-aos-duration="1500">
+                </div>
+                <div class="text-center px-6 -mt-20 relative z-10 pb-16">
+                    <p class="text-[0.6rem] tracking-[0.3em] text-gray-400 uppercase mb-2" data-aos="fade-up">The Groom</p>
+                    <h2 class="font-cinematic text-3xl md:text-4xl text-[#D4AF37] mb-2 tracking-widest" data-aos="fade-up" data-aos-delay="200">Khoirul Huda<br><span class="text-lg">S.Pd., Gr</span></h2>
+                    <div class="fade-line" data-aos="fade-in" data-aos-delay="300"></div>
+                    <p class="text-xs text-gray-400 font-light mb-1" data-aos="fade-up" data-aos-delay="400">Putra dari</p>
+                    <p class="font-serif-elegant text-sm text-gray-300" data-aos="fade-up" data-aos-delay="500">Bapak Drs. H. Khairunnas Batubara<br>& Ibu Hj. Roswani Nasution</p>
+                    <a href="#" class="inline-block mt-4 text-[0.7rem] border border-gray-600 rounded-full px-4 py-1 text-gray-400 hover:text-[#D4AF37] transition" data-aos="zoom-in" data-aos-delay="600"><i class="fab fa-instagram mr-2"></i>@khoirulhuda</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOURNEY OF LOVE -->
+        <section id="journey" class="py-20 px-6 bg-transparent-dark">
+            <h2 class="section-title" data-aos="fade-down" data-aos-duration="1000">Journey Of Love<br><span class="text-[0.6rem] tracking-widest text-gray-400 font-sans mt-2 block">DIJAH AND IRUL</span></h2>
+            
+            <div class="max-w-2xl mx-auto space-y-14 mt-12 relative border-l border-[#D4AF37]/30 ml-2 md:ml-auto pl-6 md:pl-8">
+                
+                <div class="relative" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="absolute -left-[33px] md:-left-[41px] top-0 w-3 h-3 rounded-full bg-[#D4AF37] shadow-[0_0_10px_#D4AF37]"></div>
+                    <h3 class="text-xs tracking-[0.2em] text-[#D4AF37] uppercase mb-3 font-semibold" data-aos="fade-right" data-aos-delay="100">Awal Bertemu</h3>
+                    <p class="font-serif-elegant text-sm text-gray-300 leading-relaxed text-justify" data-aos="fade-up" data-aos-delay="200">
+                        Tidak ada yang kebetulan di dunia ini. Semua sudah tersusun rapih oleh sang Maha Kuasa. Kita tidak bisa memilih kepada siapa kita akan berjodoh. Di antara milyaran ketidakmungkinan, semesta memilih untuk mempertemukan kami dalam satu waktu yang tak terduga. Kami pertama kali bertemu karena dikenalkan oleh teman kami. Dari awal kenal perbincangan kami memang sudah mengarah ke tujuan yg serius tidak ada kata pacaran tetapi kami berkomitmen untuk menjalin hubungan serius ke jenjang pernikahan.
+                    </p>
+                </div>
+
+                <div class="relative" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="absolute -left-[33px] md:-left-[41px] top-0 w-3 h-3 rounded-full bg-[#D4AF37] shadow-[0_0_10px_#D4AF37]"></div>
+                    <h3 class="text-xs tracking-[0.2em] text-[#D4AF37] uppercase mb-3 font-semibold" data-aos="fade-right" data-aos-delay="100">Lamaran</h3>
+                    <p class="font-serif-elegant text-sm text-gray-300 leading-relaxed text-justify" data-aos="fade-up" data-aos-delay="200">
+                        Kami tidak mencari kesempurnaan, tetapi saling melengkapi kekurangan. Setelah melewati ombak, badai dan angin yang begitu kencang, sampailah dititik ini. Kehendak-Nya menuntun kami pada sebuah ikatan yang tidak disangka hingga akhirnya membawa kami pada ikatan suci yang di cintai-Nya. Atas izin dan ridho dari Allah SWT dan kedua orangtua kami, tanggal 30 Juni 2026 menjadi hari spesial yang mempertemukan dua keluarga dalam satu niat baik.
+                    </p>
+                </div>
+
+                <div class="relative" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="absolute -left-[33px] md:-left-[41px] top-0 w-3 h-3 rounded-full bg-[#D4AF37] shadow-[0_0_10px_#D4AF37]"></div>
+                    <h3 class="text-xs tracking-[0.2em] text-[#D4AF37] uppercase mb-3 font-semibold" data-aos="fade-right" data-aos-delay="100">Pernikahan</h3>
+                    <p class="font-serif-elegant text-sm text-gray-300 leading-relaxed text-justify" data-aos="fade-up" data-aos-delay="200">
+                        Percayalah, bukan karena bertemu lalu berjodoh tapi karena berjodoh lah kami dipertemukan. Dan kini, di tanggal 22 Agustus 2026 bukan hanya awal dari lembaran baru, tetapi juga peneguh cinta yang ingin kami jaga selamanya dalam satu ikatan suci - sebuah ibadah panjang bernama pernikahan. Dan inilah janji kami untuk hari ini dan selamanya. Mohon doanya agar semua dimudahkan dan dilancarkan.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SAVE THE DATE -->
+        <section id="event" class="py-24 px-6 bg-gradient-dark text-center">
+            <div class="relative z-10 max-w-xl mx-auto">
+                <h2 class="section-title" data-aos="zoom-in" data-aos-duration="1000">Save The Date</h2>
+                <p class="font-serif-elegant text-sm text-gray-300 italic mb-10" data-aos="fade-up" data-aos-delay="200">"Pernikahan adalah ibadah, dan setiap ibadah bermuara pada cinta-Nya sebagai tujuan."</p>
+                
+                <!-- Countdown -->
+                <div class="flex justify-center gap-6 mb-16" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-center">
+                        <span id="days" class="block font-cinematic text-3xl text-white">00</span>
+                        <span class="text-[0.5rem] tracking-[0.2em] text-[#D4AF37] uppercase">Hari</span>
+                    </div>
+                    <div class="text-center">
+                        <span id="hours" class="block font-cinematic text-3xl text-white">00</span>
+                        <span class="text-[0.5rem] tracking-[0.2em] text-[#D4AF37] uppercase">Jam</span>
+                    </div>
+                    <div class="text-center">
+                        <span id="minutes" class="block font-cinematic text-3xl text-white">00</span>
+                        <span class="text-[0.5rem] tracking-[0.2em] text-[#D4AF37] uppercase">Menit</span>
+                    </div>
+                    <div class="text-center">
+                        <span id="seconds" class="block font-cinematic text-3xl text-white">00</span>
+                        <span class="text-[0.5rem] tracking-[0.2em] text-[#D4AF37] uppercase">Detik</span>
+                    </div>
+                </div>
+
+                <!-- Event Info -->
+                <div class="border-t border-b border-[#D4AF37]/30 py-10 relative overflow-hidden" data-aos="flip-up" data-aos-duration="1200">
+                    <div class="absolute inset-0 bg-white/5 blur-sm z-[-1]"></div>
+                    <p class="text-[0.7rem] tracking-[0.3em] text-[#D4AF37] uppercase mb-4" data-aos="fade-down" data-aos-delay="200">Akad & Resepsi</p>
+                    <p class="font-cinematic text-xl text-white tracking-widest mb-2" data-aos="fade-in" data-aos-delay="300">Sabtu, 22 Agustus 2026</p>
+                    <p class="text-sm text-gray-300 mb-6 font-light" data-aos="fade-in" data-aos-delay="400">08.00 WIB s/d Selesai</p>
+                    
+                    <p class="font-semibold text-sm tracking-widest uppercase text-white mb-2" data-aos="fade-up" data-aos-delay="500">Kediaman Mempelai Wanita</p>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-6 font-light" data-aos="fade-up" data-aos-delay="600">Jl. Dr. Sutomo GG. Indomika No. 18<br>Kota Padangsidimpuan</p>
+                    
+                    <a href="https://maps.google.com/?q=Jl.+Dr.+Sutomo+GG.+Indomika+No.+18,+Kota+Padangsidimpuan" target="_blank" class="btn-cinematic border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black inline-block mt-2" data-aos="zoom-in" data-aos-delay="700">Buka Google Maps</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUR MOMENT (Gallery) -->
+        <section id="gallery" class="py-20 px-4 bg-transparent-dark">
+            <h2 class="section-title" data-aos="fade-down">Our Moment</h2>
+            <p class="text-center font-serif-elegant text-sm text-gray-400 italic mb-10" data-aos="fade-up" data-aos-delay="200">"I was created in time to fill your time..."</p>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="masonry-grid">
+                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="100"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500" class="rounded"></div>
+                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="200"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500" class="rounded"></div>
+                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="300"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=500" class="rounded"></div>
+                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="400"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500" class="rounded"></div>
+                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="500"><img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=500" class="rounded"></div>
+                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="600"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=500" class="rounded"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP & WISHES -->
+        <section id="rsvp" class="py-20 px-6 bg-gradient-dark">
+            <div class="max-w-xl mx-auto">
+                <h2 class="section-title" data-aos="fade-down">RSVP & Wishes</h2>
+                <p class="text-xs text-center text-gray-400 mb-10 leading-relaxed font-light" data-aos="fade-up" data-aos-delay="200">
+                    Bagi tamu undangan yang akan hadir, silakan kirimkan konfirmasi kehadiran dengan mengisi form berikut:
+                </p>
+
+                <form onsubmit="event.preventDefault(); addWish();" class="space-y-6 mb-12" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="300">
+                    <div data-aos="fade-right" data-aos-delay="400">
+                        <label class="text-[0.6rem] tracking-widest uppercase text-gray-400">Nama</label>
+                        <input type="text" id="senderName" class="input-cinematic" required>
+                    </div>
+                    
+                    <div data-aos="fade-right" data-aos-delay="500">
+                        <label class="text-[0.6rem] tracking-widest uppercase text-gray-400 mb-2 block">Konfirmasi Kehadiran</label>
+                        <div class="flex gap-4">
+                            <label class="flex-1 text-center border border-gray-700 py-3 rounded cursor-pointer hover:bg-gray-800 transition">
+                                <input type="radio" name="attendance" value="Hadir" class="hidden peer" required>
+                                <span class="text-xs tracking-widest text-gray-400 peer-checked:text-[#D4AF37] peer-checked:font-bold">Hadir</span>
+                            </label>
+                            <label class="flex-1 text-center border border-gray-700 py-3 rounded cursor-pointer hover:bg-gray-800 transition">
+                                <input type="radio" name="attendance" value="Tidak Hadir" class="hidden peer">
+                                <span class="text-xs tracking-widest text-gray-400 peer-checked:text-[#D4AF37] peer-checked:font-bold">Tidak Hadir</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div data-aos="fade-right" data-aos-delay="600">
+                        <label class="text-[0.6rem] tracking-widest uppercase text-gray-400">Doa & Ucapan</label>
+                        <textarea id="senderMsg" rows="3" class="input-cinematic" required></textarea>
+                    </div>
+
+                    <button type="submit" id="btnSubmitWish" class="btn-cinematic w-full mt-4 !bg-[#D4AF37]/10 hover:!bg-[#D4AF37]/30 border-[#D4AF37]" data-aos="zoom-in" data-aos-delay="700">Kirim Ucapan</button>
+                </form>
+
+                <!-- Daftar Ucapan -->
+                <div id="wishesContainer" class="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar" data-aos="fade-in" data-aos-delay="800">
+                    <div id="loadingWishes" class="text-center text-[#D4AF37] text-xs py-4 hidden">
+                        <i class="fas fa-spinner fa-spin mr-2"></i> Memuat ucapan...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WEDDING GIFT -->
+        <section class="py-20 px-6 bg-transparent-dark text-center border-t border-gray-800/50">
+            <h2 class="section-title text-sm" data-aos="fade-down">Wedding Gift</h2>
+            <p class="text-xs text-gray-400 mb-10 max-w-sm mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+                Doa restu Anda adalah hadiah terindah. Namun, jika Anda ingin memberikan tanda kasih, dapat melalui tautan berikut:
+            </p>
+            
+            <div class="space-y-6 max-w-sm mx-auto">
+                <div class="border border-gray-700/50 p-6 rounded bg-black/40 backdrop-blur-sm" data-aos="fade-right" data-aos-delay="300">
+                    <p class="text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 mb-2">Bank BSI</p>
+                    <p class="font-cinematic text-xl text-[#D4AF37] tracking-widest mb-1">1234 5678 90</p>
+                    <p class="text-xs text-gray-400 mb-4 font-serif-elegant italic">a.n Khoirul Huda</p>
+                    <button onclick="copyToClipboard('1234567890')" class="text-[0.6rem] tracking-widest uppercase border-b border-gray-500 pb-1 hover:text-white transition">Salin Rekening</button>
+                </div>
+                <div class="border border-gray-700/50 p-6 rounded bg-black/40 backdrop-blur-sm" data-aos="fade-left" data-aos-delay="500">
+                    <p class="text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 mb-2">Bank Mandiri</p>
+                    <p class="font-cinematic text-xl text-[#D4AF37] tracking-widest mb-1">0987 6543 21</p>
+                    <p class="text-xs text-gray-400 mb-4 font-serif-elegant italic">a.n Siti Khodijah Dalimunthe</p>
+                    <button onclick="copyToClipboard('0987654321')" class="text-[0.6rem] tracking-widest uppercase border-b border-gray-500 pb-1 hover:text-white transition">Salin Rekening</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLOSING / THANK YOU -->
+        <section class="h-screen flex flex-col justify-center items-center text-center px-6 bg-gradient-dark">
+            <div class="relative z-10" data-aos="zoom-in" data-aos-duration="2000">
+                <p class="text-xs tracking-[0.3em] uppercase text-[#D4AF37] mb-4">Thank You For Your Attendance</p>
+                <p class="font-serif-elegant text-sm text-gray-300 max-w-md mx-auto mb-10 leading-loose italic">
+                    Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+                </p>
+                <h2 class="font-cinematic text-4xl text-white tracking-widest">DIJAH & IRUL</h2>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Notifikasi Toast -->
+    <div id="toast" class="fixed top-10 left-1/2 transform -translate-x-1/2 bg-[#D4AF37] text-black px-6 py-3 rounded shadow-xl z-[99999] transition-all duration-300 opacity-0 invisible flex items-center gap-3">
+        <i class="fas fa-check-circle" id="toast-icon"></i><span class="text-xs font-bold uppercase tracking-widest" id="toast-msg">Berhasil!</span>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbydxTOp9ebk3fCIRnYsLlyNhZJbni2ZfNtlG2kOeGRjR2AkYP0pbOfZpNKu6W5vFfPL9Q/exec'; 
+
+        // Menu Toggle
+        function toggleMenu() {
+            const btn = document.getElementById('menu-btn');
+            const overlay = document.getElementById('menu-overlay');
+            btn.classList.toggle('active');
+            overlay.classList.toggle('open');
+        }
+
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = message;
+            toast.classList.remove('opacity-0', 'invisible');
+            setTimeout(() => { toast.classList.add('opacity-0', 'invisible'); }, 3000);
+        }
+
+        // Buka Undangan & Autoplay Video
+        function openInvitation() {
+            document.getElementById('cover-page').style.transform = 'translateY(-100%)';
+            document.getElementById('main-content').classList.remove('hidden');
+            document.getElementById('menu-btn').style.display = 'flex';
+            document.getElementById('music-btn').style.display = 'flex';
+            
+            // Audio Play
+            const audio = document.getElementById('bg-music');
+            audio.play().catch(e => console.log("Audio autoplay blocked"));
+
+            // Video Background Load & Play
+            const bgVideo = document.getElementById('bg-video');
+            bgVideo.load();
+            const playPromise = bgVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    bgVideo.classList.remove('opacity-0'); // Memunculkan video secara halus
+                }).catch(error => {
+                    console.log("Autoplay video dicegah oleh browser.");
+                });
+            }
+
+            // Memunculkan Scroll Guide
+            setTimeout(() => { 
+                const guide = document.getElementById('scroll-guide');
+                guide.classList.remove('opacity-0');
+                guide.classList.remove('pointer-events-none');
+            }, 1000);
+            
+            // Refresh animasi AOS setelah layout berubah
+            setTimeout(() => { AOS.refresh(); }, 500);
+            loadWishes();
+        }
+
+        // Hilangkan Scroll Guide jika user sudah mulai scroll
+        window.addEventListener('scroll', () => {
+            const guide = document.getElementById('scroll-guide');
+            if (window.scrollY > 150) {
+                guide.classList.add('hide-scroll-guide');
+            }
+        });
+
+        // Music Toggle
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            const btn = document.getElementById('music-btn');
+            if (audio.paused) { 
+                audio.play(); btn.classList.remove('music-paused'); 
+            } else { 
+                audio.pause(); btn.classList.add('music-paused'); 
+            }
+        }
+
+        // Copy to Clipboard
+        function copyToClipboard(text) {
+            const el = document.createElement('textarea');
+            el.value = text; document.body.appendChild(el);
+            el.select(); document.execCommand('copy'); document.body.removeChild(el);
+            showToast("Rekening Disalin");
+        }
+
+        // Load Wishes
+        function loadWishes() {
+            const container = document.getElementById('wishesContainer');
+            const loading = document.getElementById('loadingWishes');
+            if(!scriptURL) return;
+
+            loading.classList.remove('hidden');
+            fetch(scriptURL)
+            .then(response => response.json())
+            .then(data => {
+                loading.classList.add('hidden');
+                container.innerHTML = '';
+                
+                if (Array.isArray(data)) {
+                    data.forEach(item => {
+                        const name = item.nama;
+                        const msg = item.ucapan;
+                        if(name && msg) {
+                            const wishHTML = `
+                            <div class="border-b border-gray-800/50 py-4" data-aos="fade-up">
+                                <div class="flex items-center justify-between mb-1">
+                                    <p class="font-semibold text-gray-200 text-sm tracking-wide">${name} <i class="fas fa-check-circle text-[#D4AF37] text-xs ml-1"></i></p>
+                                </div>
+                                <p class="text-xs text-gray-400 font-serif-elegant italic leading-relaxed">"${msg}"</p>
+                            </div>`;
+                            container.insertAdjacentHTML('afterbegin', wishHTML);
+                        }
+                    });
+                    AOS.refresh();
+                }
+            })
+            .catch(error => { console.error('Error:', error); loading.innerText = 'Gagal memuat.'; });
+        }
+
+        // Add Wish
+        function addWish() {
+            const name = document.getElementById('senderName').value;
+            const msg = document.getElementById('senderMsg').value;
+            const btn = document.getElementById('btnSubmitWish');
+            const container = document.getElementById('wishesContainer');
+            const attendance = document.querySelector('input[name="attendance"]:checked')?.value || "Hadir";
+            
+            if(name && msg) {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = 'Mengirim...';
+                btn.disabled = true;
+
+                fetch(scriptURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({ nama: name, ucapan: msg })
+                })
+                .then(response => {
+                    const newWish = `
+                    <div class="border-b border-gray-800/50 py-4 relative" data-aos="fade-in">
+                        <span class="absolute top-4 right-0 text-[10px] text-gray-500 uppercase">Baru saja</span>
+                        <div class="flex items-center justify-between mb-1">
+                            <p class="font-semibold text-gray-200 text-sm tracking-wide">${name} <i class="fas fa-check-circle text-[#D4AF37] text-xs ml-1"></i></p>
+                        </div>
+                        <p class="text-xs text-gray-400 font-serif-elegant italic leading-relaxed">"${msg}"</p>
+                    </div>`;
+                    
+                    container.insertAdjacentHTML('afterbegin', newWish);
+                    document.getElementById('senderName').value = '';
+                    document.getElementById('senderMsg').value = '';
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    
+                    showToast("Ucapan Terkirim");
+                    AOS.refresh();
+                })
+                .catch(error => {
+                    btn.innerHTML = originalText; btn.disabled = false;
+                    showToast("Gagal mengirim");
+                });
+            }
+        }
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const guestName = urlParams.get('to');
+            if (guestName) document.getElementById('guest-name').textContent = guestName;
+
+            AOS.init({ 
+                once: false, // Animasi diputar ulang setiap di-scroll
+                duration: 1000, 
+                offset: 50,
+                easing: 'ease-out-cubic'
+            });
+
+            // Countdown Timer
+            const countDownDate = new Date("Aug 22, 2026 08:00:00").getTime();
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                if (distance > 0) {
+                    document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                    document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                    document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                    document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
