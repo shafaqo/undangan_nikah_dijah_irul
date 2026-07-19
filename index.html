@@ -45,7 +45,7 @@
         }
         
         .bg-gradient-dark {
-            background: linear-gradient(to bottom, rgba(17,17,17,0.4) 0%, rgba(17,17,17,0.9) 100%);
+            background: linear-gradient(to bottom, rgba(17,17,17,0.4) 0%, rgba(17,17,17,0.95) 100%);
         }
 
         /* Filter untuk Minimap agar Dark Mode/Estetik */
@@ -97,7 +97,7 @@
         /* Cover Layar Penuh */
         #cover-page {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 9999;
-            background-image: url('sampul.jpeg');
+            background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop');
             background-size: cover; background-position: center;
             display: flex; flex-direction: column; justify-content: space-between; align-items: center;
             padding: 10vh 0; transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
@@ -138,6 +138,28 @@
         .profile-img-container::after {
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
             background: linear-gradient(to top, rgba(17,17,17,1) 0%, transparent 100%);
+        }
+
+        /* Slider Gift Animasi Elegan (Slide & Fade) */
+        .gift-item {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            pointer-events: none;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute;
+            inset: 0;
+        }
+        .gift-item.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            z-index: 10;
+        }
+        .gift-item.exit {
+            opacity: 0;
+            transform: translateY(-20px) scale(1.05);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .input-cinematic {
@@ -190,14 +212,14 @@
 </head>
 <body>
 
-    <!-- Video Background -->
+    <!-- Video Background (loop ditambahkan) -->
     <div class="fixed inset-0 w-full h-full z-[-2] bg-black overflow-hidden">
         <!-- GANTI NAMA_FILE_VIDEO_ANDA.mp4 dengan link video background Anda -->
-        <video id="bg-video" muted playsinline class="w-full h-full object-cover opacity-0 transition-opacity duration-2000">
-            <source src="video.mp4" type="video/mp4">
+        <video id="bg-video" muted playsinline loop class="w-full h-full object-cover opacity-0 transition-opacity duration-2000">
+            <source src="NAMA_FILE_VIDEO_ANDA.mp4" type="video/mp4">
         </video>
         <!-- Overlay gelap agar teks tetap terbaca -->
-        <div class="absolute inset-0 bg-black/60 z-[-1]"></div>
+        <div class="absolute inset-0 bg-black/70 z-[-1]"></div>
     </div>
 
     <!-- Audio (Lagu Pengiring) -->
@@ -220,15 +242,6 @@
         <span class="text-[0.6rem] tracking-[0.2em] uppercase text-gray-300 mb-2 font-light">Scroll ke Bawah</span>
         <div class="mouse-icon"><div class="mouse-wheel"></div></div>
         <i class="fas fa-chevron-down mt-2 animate-bounce text-gray-400 text-sm"></i>
-    </div>
-
-    <!-- Fullscreen Menu Overlay -->
-    <div id="menu-overlay">
-        <a href="#mempelai" class="menu-link" onclick="toggleMenu()">The Couple</a>
-        <a href="#journey" class="menu-link" onclick="toggleMenu()">Journey of Love</a>
-        <a href="#event" class="menu-link" onclick="toggleMenu()">Save The Date</a>
-        <a href="#gallery" class="menu-link" onclick="toggleMenu()">Our Moment</a>
-        <a href="#rsvp" class="menu-link" onclick="toggleMenu()">RSVP & Wishes</a>
     </div>
 
     <!-- 1. COVER SCREEN -->
@@ -273,11 +286,15 @@
         <section id="mempelai" class="pt-10 pb-0 bg-gradient-dark">
             <div data-aos="fade-right" data-aos-duration="1200">
                 <div class="profile-img-container shadow-2xl">
-                    <img src="dijah.jpeg" alt="The Bride" data-aos="zoom-in-up" data-aos-duration="1500">
+                    <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=800&auto=format&fit=crop" alt="The Bride" data-aos="zoom-in-up" data-aos-duration="1500">
                 </div>
                 <div class="text-center px-6 -mt-20 relative z-10 pb-16">
                     <p class="text-[0.6rem] tracking-[0.3em] text-gray-400 uppercase mb-2" data-aos="fade-up">The Bride</p>
-                    <h2 class="font-cinematic text-3xl md:text-4xl text-[#D4AF37] mb-2 tracking-widest" data-aos="fade-up" data-aos-delay="200">Siti Khodijah Dalimunthe<br><span class="text-lg">M.Pd</span></h2>
+                    
+                    <!-- Perbaikan Font Gelar -->
+                    <h2 class="font-cinematic text-3xl md:text-4xl text-[#D4AF37] mb-1 tracking-widest" data-aos="fade-up" data-aos-delay="200">Siti Khodijah Dalimunthe</h2>
+                    <p class="font-serif-elegant text-lg md:text-xl text-gray-300 mb-2" data-aos="fade-up" data-aos-delay="250">M.Pd</p>
+                    
                     <div class="fade-line" data-aos="fade-in" data-aos-delay="300"></div>
                     <p class="text-xs text-gray-400 font-light mb-1" data-aos="fade-up" data-aos-delay="400">Putri dari</p>
                     <p class="font-serif-elegant text-sm text-gray-300" data-aos="fade-up" data-aos-delay="500">Bapak Drs. Cambong Dalimunthe<br>& Ibu Roslaini</p>
@@ -288,11 +305,15 @@
             <!-- THE GROOM -->
             <div data-aos="fade-left" data-aos-duration="1200" class="mt-10">
                 <div class="profile-img-container shadow-2xl">
-                    <img src="irul.jpeg" alt="The Groom" data-aos="zoom-in-up" data-aos-duration="1500">
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=800&auto=format&fit=crop" alt="The Groom" data-aos="zoom-in-up" data-aos-duration="1500">
                 </div>
                 <div class="text-center px-6 -mt-20 relative z-10 pb-16">
                     <p class="text-[0.6rem] tracking-[0.3em] text-gray-400 uppercase mb-2" data-aos="fade-up">The Groom</p>
-                    <h2 class="font-cinematic text-3xl md:text-4xl text-[#D4AF37] mb-2 tracking-widest" data-aos="fade-up" data-aos-delay="200">Khoirul Huda<br><span class="text-lg">S.Pd., Gr</span></h2>
+                    
+                    <!-- Perbaikan Font Gelar -->
+                    <h2 class="font-cinematic text-3xl md:text-4xl text-[#D4AF37] mb-1 tracking-widest" data-aos="fade-up" data-aos-delay="200">Khoirul Huda</h2>
+                    <p class="font-serif-elegant text-lg md:text-xl text-gray-300 mb-2" data-aos="fade-up" data-aos-delay="250">S.Pd., Gr</p>
+                    
                     <div class="fade-line" data-aos="fade-in" data-aos-delay="300"></div>
                     <p class="text-xs text-gray-400 font-light mb-1" data-aos="fade-up" data-aos-delay="400">Putra dari</p>
                     <p class="font-serif-elegant text-sm text-gray-300" data-aos="fade-up" data-aos-delay="500">Bapak Drs. H. Khairunnas Batubara<br>& Ibu Hj. Roswani Nasution</p>
@@ -327,8 +348,7 @@
                     <div class="absolute -left-[33px] md:-left-[41px] top-0 w-3 h-3 rounded-full bg-[#D4AF37] shadow-[0_0_10px_#D4AF37]"></div>
                     <h3 class="text-xs tracking-[0.2em] text-[#D4AF37] uppercase mb-3 font-semibold" data-aos="fade-right" data-aos-delay="100">Pernikahan</h3>
                     <p class="font-serif-elegant text-sm text-gray-300 leading-relaxed text-justify" data-aos="fade-up" data-aos-delay="200">
-                        Percayalah, bukan karena bertemu lalu berjodoh tapi karena berjodoh lah kami dipertemukan. Dan kini, di tanggal 22 Agustus 2026 bukan hanya awal dari lembaran baru, tetapi juga peneguh cinta yang ingin kami jaga selamanya dalam satu ikatan suci - sebuah ibadah panjang bernama pernikahan. Dan inilah janji kami untuk hari ini dan selamanya. 
-Mohon doanya agar semua dimudahkan dan dilancarkan 
+                        Percayalah, bukan karena bertemu lalu berjodoh tapi karena berjodoh lah kami dipertemukan. Dan kini, di tanggal 22 Agustus 2026 bukan hanya awal dari lembaran baru, tetapi juga peneguh cinta yang ingin kami jaga selamanya dalam satu ikatan suci - sebuah ibadah panjang bernama pernikahan. Dan inilah janji kami untuk hari ini dan selamanya. Mohon doanya agar semua dimudahkan dan dilancarkan.
                     </p>
                 </div>
             </div>
@@ -365,7 +385,6 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
                     
                     <!-- 1. Akad & Resepsi -->
                     <div class="border border-[#D4AF37]/30 p-8 rounded-lg bg-black/50 backdrop-blur-sm relative overflow-hidden flex flex-col" data-aos="fade-right" data-aos-duration="1200">
-                        <div class="absolute inset-0 bg-white/5 blur-sm z-[-1]"></div>
                         <div class="text-center border-b border-gray-700 pb-4 mb-6">
                             <p class="text-[0.7rem] tracking-[0.3em] text-[#D4AF37] uppercase mb-2">Akad & Resepsi</p>
                             <p class="font-cinematic text-2xl text-white tracking-widest mb-1">Sabtu, 22 Agustus 2026</p>
@@ -387,7 +406,6 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
 
                     <!-- 2. Ngunduh Mantu -->
                     <div class="border border-[#D4AF37]/30 p-8 rounded-lg bg-black/50 backdrop-blur-sm relative overflow-hidden flex flex-col" data-aos="fade-left" data-aos-duration="1200">
-                        <div class="absolute inset-0 bg-white/5 blur-sm z-[-1]"></div>
                         <div class="text-center border-b border-gray-700 pb-4 mb-6">
                             <p class="text-[0.7rem] tracking-[0.3em] text-[#D4AF37] uppercase mb-2">Ngunduh Mantu</p>
                             <p class="font-cinematic text-2xl text-white tracking-widest mb-1">Minggu, 23 Agustus 2026</p>
@@ -396,7 +414,7 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
                         
                         <div class="text-center flex-grow">
                             <p class="font-semibold text-sm tracking-widest uppercase text-white mb-2">Kediaman Mempelai Pria</p>
-                            <p class="text-xs text-gray-400 leading-relaxed mb-6 font-light">Jl. Merdeka, Pusat Kota<br>Kota Padangsidimpuan</p>
+                            <p class="text-xs text-gray-400 leading-relaxed mb-6 font-light">Pusat Kota (Sesuai Titik Lokasi)<br>Kota Padangsidimpuan</p>
                             
                             <!-- Minimap Estetik -->
                             <div class="w-full h-48 mb-6 overflow-hidden rounded border border-gray-700 p-1 bg-black">
@@ -411,25 +429,77 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
             </div>
         </section>
 
-        <!-- OUR MOMENT (Gallery) -->
+        <!-- OUR MOMENT (Gallery & Autoplay Video) -->
         <section id="gallery" class="py-20 px-4 bg-transparent-dark">
             <h2 class="section-title" data-aos="fade-down">Our Moment</h2>
             <p class="text-center font-serif-elegant text-sm text-gray-400 italic mb-10" data-aos="fade-up" data-aos-delay="200">"I was created in time to fill your time..."</p>
             
             <div class="max-w-4xl mx-auto">
+                <!-- Fitur Video Autoplay & Fullscreen -->
+                <div class="relative w-full aspect-video mb-10 overflow-hidden border border-[#D4AF37]/30 rounded shadow-2xl" data-aos="fade-up" data-aos-duration="1500">
+                    <!-- GANTI NAMA_FILE_VIDEO_MOMENT_ANDA.mp4 -->
+                    <video id="moment-video" muted loop playsinline class="w-full h-full object-cover">
+                        <source src="NAMA_FILE_VIDEO_MOMENT_ANDA.mp4" type="video/mp4">
+                    </video>
+                    <!-- Tombol Fullscreen -->
+                    <button onclick="openFullscreen('moment-video')" class="absolute bottom-4 right-4 bg-black/50 p-3 rounded-full text-white border border-[#D4AF37]/50 hover:bg-[#D4AF37] hover:text-black transition z-10">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <!-- Label atas -->
+                    <p class="absolute top-4 left-4 text-xs font-cinematic tracking-widest text-white z-10 bg-black/50 px-3 py-1 rounded border border-white/20">Our Story Teaser</p>
+                </div>
+
                 <div class="masonry-grid">
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="100"><img src="1.JPEG" class="rounded"></div>
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="200"><img src="2.JPEG" class="rounded"></div>
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="300"><img src="3.JPEG" class="rounded"></div>
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="400"><img src="4.JPEG" class="rounded"></div>
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="500"><img src="5.JPEG" class="rounded"></div>
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="600"><img src="6.JPEG" class="rounded"></div>
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="700"><img src="7.JPEG" class="rounded"></div>
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="800"><img src="8.JPEG" class="rounded"></div>
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="900"><img src="9.JPEG" class="rounded"></div>
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="1000"><img src="10.jpeg" class="rounded"></div>
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="1100"><img src="11.jpeg" class="rounded"></div>
-                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="1200"><img src="12.png" class="rounded"></div>
+                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="100"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500" class="rounded"></div>
+                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="200"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500" class="rounded"></div>
+                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="300"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=500" class="rounded"></div>
+                    <div class="masonry-item" data-aos="zoom-in-up" data-aos-delay="400"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500" class="rounded"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WEDDING GIFT (Dipindah sebelum RSVP) -->
+        <section class="py-20 px-6 bg-transparent-dark text-center border-t border-gray-800/50">
+            <h2 class="section-title text-sm" data-aos="fade-down">Wedding Gift</h2>
+            <p class="text-xs text-gray-400 mb-10 max-w-sm mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+                Doa restu Anda adalah hadiah terindah. Namun, jika Anda ingin memberikan tanda kasih, dapat melalui tautan berikut:
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                <!-- Slider Mempelai Pria (Bank BSI & DANA) -->
+                <div class="gift-slider-container relative h-[220px] w-full overflow-hidden border border-[#D4AF37]/30 rounded bg-black/40 backdrop-blur-sm" data-aos="fade-right" data-aos-delay="300">
+                    <!-- BSI -->
+                    <div class="gift-item active flex flex-col justify-center items-center p-6">
+                        <p class="text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 mb-2">Bank BSI</p>
+                        <p class="font-cinematic text-xl text-[#D4AF37] tracking-widest mb-1">1234 5678 90</p>
+                        <p class="text-xs text-gray-400 mb-4 font-serif-elegant italic">a.n Khoirul Huda</p>
+                        <button onclick="copyToClipboard('1234567890')" class="text-[0.6rem] tracking-widest uppercase border-b border-gray-500 pb-1 hover:text-white transition">Salin Rekening</button>
+                    </div>
+                    <!-- DANA Irul -->
+                    <div class="gift-item flex flex-col justify-center items-center p-6">
+                        <p class="text-[0.6rem] tracking-[0.2em] uppercase text-blue-400 mb-2">DANA</p>
+                        <p class="font-cinematic text-xl text-[#D4AF37] tracking-widest mb-1">0812 3456 7890</p>
+                        <p class="text-xs text-gray-400 mb-4 font-serif-elegant italic">a.n Khoirul Huda</p>
+                        <button onclick="copyToClipboard('081234567890')" class="text-[0.6rem] tracking-widest uppercase border-b border-gray-500 pb-1 hover:text-white transition">Salin No DANA</button>
+                    </div>
+                </div>
+
+                <!-- Slider Mempelai Wanita (Bank Mandiri & DANA) -->
+                <div class="gift-slider-container relative h-[220px] w-full overflow-hidden border border-[#D4AF37]/30 rounded bg-black/40 backdrop-blur-sm" data-aos="fade-left" data-aos-delay="500">
+                    <!-- Mandiri -->
+                    <div class="gift-item active flex flex-col justify-center items-center p-6">
+                        <p class="text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 mb-2">Bank Mandiri</p>
+                        <p class="font-cinematic text-xl text-[#D4AF37] tracking-widest mb-1">0987 6543 21</p>
+                        <p class="text-xs text-gray-400 mb-4 font-serif-elegant italic">a.n Siti Khodijah Dalimunthe</p>
+                        <button onclick="copyToClipboard('0987654321')" class="text-[0.6rem] tracking-widest uppercase border-b border-gray-500 pb-1 hover:text-white transition">Salin Rekening</button>
+                    </div>
+                    <!-- DANA Dijah -->
+                    <div class="gift-item flex flex-col justify-center items-center p-6">
+                        <p class="text-[0.6rem] tracking-[0.2em] uppercase text-blue-400 mb-2">DANA</p>
+                        <p class="font-cinematic text-xl text-[#D4AF37] tracking-widest mb-1">0898 7654 3210</p>
+                        <p class="text-xs text-gray-400 mb-4 font-serif-elegant italic">a.n Siti Khodijah Dalimunthe</p>
+                        <button onclick="copyToClipboard('089876543210')" class="text-[0.6rem] tracking-widest uppercase border-b border-gray-500 pb-1 hover:text-white transition">Salin No DANA</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -479,31 +549,36 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
             </div>
         </section>
 
-        <!-- WEDDING GIFT -->
-        <section class="py-20 px-6 bg-transparent-dark text-center border-t border-gray-800/50">
-            <h2 class="section-title text-sm" data-aos="fade-down">Wedding Gift</h2>
-            <p class="text-xs text-gray-400 mb-10 max-w-sm mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="200">
-                Doa restu Anda adalah hadiah terindah. Namun, jika Anda ingin memberikan tanda kasih, dapat melalui tautan berikut:
-            </p>
-            
-            <div class="space-y-6 max-w-sm mx-auto">
-                <div class="border border-gray-700/50 p-6 rounded bg-black/40 backdrop-blur-sm" data-aos="fade-right" data-aos-delay="300">
-                    <p class="text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 mb-2">Bank BSI</p>
-                    <p class="font-cinematic text-xl text-[#D4AF37] tracking-widest mb-1">1234 5678 90</p>
-                    <p class="text-xs text-gray-400 mb-4 font-serif-elegant italic">a.n Khoirul Huda</p>
-                    <button onclick="copyToClipboard('1234567890')" class="text-[0.6rem] tracking-widest uppercase border-b border-gray-500 pb-1 hover:text-white transition">Salin Rekening</button>
+        <!-- TURUT MENGUNDANG -->
+        <section class="py-20 px-6 bg-transparent-dark text-center">
+            <h2 class="section-title text-sm" data-aos="fade-down">Turut Mengundang</h2>
+            <div class="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto mt-10">
+                <!-- Keluarga Wanita -->
+                <div data-aos="fade-right" data-aos-duration="1200">
+                    <h3 class="text-[#D4AF37] font-cinematic text-lg mb-6 tracking-widest border-b border-gray-700 pb-2 inline-block">Keluarga Mempelai Wanita</h3>
+                    <ul class="text-sm text-gray-300 font-serif-elegant space-y-3 leading-relaxed">
+                        <li>Keluarga Besar Bpk. Cambong Dalimunthe</li>
+                        <li>Keluarga Besar Alm. Kakek / Nenek</li>
+                        <li>Paman & Bibi Sekeluarga</li>
+                        <li>Segenap Handai Taulan</li>
+                    </ul>
                 </div>
-                <div class="border border-gray-700/50 p-6 rounded bg-black/40 backdrop-blur-sm" data-aos="fade-left" data-aos-delay="500">
-                    <p class="text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 mb-2">Bank Mandiri</p>
-                    <p class="font-cinematic text-xl text-[#D4AF37] tracking-widest mb-1">0987 6543 21</p>
-                    <p class="text-xs text-gray-400 mb-4 font-serif-elegant italic">a.n Siti Khodijah Dalimunthe</p>
-                    <button onclick="copyToClipboard('0987654321')" class="text-[0.6rem] tracking-widest uppercase border-b border-gray-500 pb-1 hover:text-white transition">Salin Rekening</button>
+                
+                <!-- Keluarga Pria -->
+                <div data-aos="fade-left" data-aos-duration="1200">
+                    <h3 class="text-[#D4AF37] font-cinematic text-lg mb-6 tracking-widest border-b border-gray-700 pb-2 inline-block">Keluarga Mempelai Pria</h3>
+                    <ul class="text-sm text-gray-300 font-serif-elegant space-y-3 leading-relaxed">
+                        <li>Keluarga Besar Drs. H. Khairunnas Batubara</li>
+                        <li>Keluarga Besar Alm. Kakek / Nenek</li>
+                        <li>Paman & Bibi Sekeluarga</li>
+                        <li>Segenap Handai Taulan</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
         <!-- CLOSING / THANK YOU -->
-        <section class="h-screen flex flex-col justify-center items-center text-center px-6 bg-gradient-dark">
+        <section class="min-h-[80vh] flex flex-col justify-center items-center text-center px-6 bg-gradient-dark border-t border-gray-800">
             <div class="relative z-10" data-aos="zoom-in" data-aos-duration="2000">
                 <p class="text-xs tracking-[0.3em] uppercase text-[#D4AF37] mb-4">Thank You For Your Attendance</p>
                 <p class="font-serif-elegant text-sm text-gray-300 max-w-md mx-auto mb-10 leading-loose italic">
@@ -512,6 +587,12 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
                 <h2 class="font-cinematic text-4xl text-white tracking-widest">DIJAH & IRUL</h2>
             </div>
         </section>
+
+        <!-- FOOTER AESTHETIC SHAFAQO -->
+        <footer class="py-8 bg-black text-center border-t border-white/5 relative z-10">
+            <p class="font-cinematic text-[#D4AF37] tracking-[0.4em] text-sm mb-2">SHAFAQO</p>
+            <p class="text-[0.55rem] text-gray-500 uppercase tracking-widest">© 2026 Didesain Sesuai Keinginan</p>
+        </footer>
 
     </main>
 
@@ -554,14 +635,12 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
 
             // Video Background Load & Play
             const bgVideo = document.getElementById('bg-video');
-            bgVideo.load(); // Mereload video dari awal
+            bgVideo.load();
             const playPromise = bgVideo.play();
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
-                    bgVideo.classList.remove('opacity-0'); // Memunculkan video secara halus
-                }).catch(error => {
-                    console.log("Autoplay video dicegah oleh browser.");
-                });
+                    bgVideo.classList.remove('opacity-0');
+                }).catch(error => { console.log("Autoplay video dicegah."); });
             }
 
             // Memunculkan Scroll Guide
@@ -571,12 +650,11 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
                 guide.classList.remove('pointer-events-none');
             }, 1000);
             
-            // Refresh animasi AOS setelah layout berubah
             setTimeout(() => { AOS.refresh(); }, 500);
             loadWishes();
         }
 
-        // Hilangkan Scroll Guide jika user sudah mulai scroll
+        // Hilangkan Scroll Guide
         window.addEventListener('scroll', () => {
             const guide = document.getElementById('scroll-guide');
             if (window.scrollY > 150) {
@@ -595,12 +673,25 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
             }
         }
 
-        // Copy to Clipboard
+        // Copy
         function copyToClipboard(text) {
             const el = document.createElement('textarea');
             el.value = text; document.body.appendChild(el);
             el.select(); document.execCommand('copy'); document.body.removeChild(el);
-            showToast("Rekening Disalin");
+            showToast("Berhasil Disalin");
+        }
+
+        // Fullscreen function
+        function openFullscreen(id) {
+            const elem = document.getElementById(id);
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+            elem.muted = false;
         }
 
         // Load Wishes
@@ -643,7 +734,6 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
             const msg = document.getElementById('senderMsg').value;
             const btn = document.getElementById('btnSubmitWish');
             const container = document.getElementById('wishesContainer');
-            const attendance = document.querySelector('input[name="attendance"]:checked')?.value || "Hadir";
             
             if(name && msg) {
                 const originalText = btn.innerHTML;
@@ -687,15 +777,9 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
             const guestName = urlParams.get('to');
             if (guestName) document.getElementById('guest-name').textContent = guestName;
 
-            // Inisiasi efek animasi kemunculan elemen
-            AOS.init({ 
-                once: false, 
-                duration: 1000, 
-                offset: 50,
-                easing: 'ease-out-cubic'
-            });
+            AOS.init({ once: false, duration: 1000, offset: 50, easing: 'ease-out-cubic' });
 
-            // Countdown Timer
+            // Countdown
             const countDownDate = new Date("Aug 22, 2026 08:00:00").getTime();
             setInterval(function() {
                 const now = new Date().getTime();
@@ -707,6 +791,41 @@ Mohon doanya agar semua dimudahkan dan dilancarkan
                     document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
                 }
             }, 1000);
+
+            // Our Moment Video Observer
+            const momentVideo = document.getElementById('moment-video');
+            if(momentVideo) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            momentVideo.play().catch(e => {});
+                        } else {
+                            momentVideo.pause();
+                        }
+                    });
+                }, { threshold: 0.5 });
+                observer.observe(momentVideo);
+            }
+
+            // Slider Animasi CSS Mewah (Card Flip/Slide)
+            const sliders = document.querySelectorAll('.gift-slider-container');
+            sliders.forEach(slider => {
+                const items = slider.querySelectorAll('.gift-item');
+                let currentIndex = 0;
+                setInterval(() => {
+                    const currentItem = items[currentIndex];
+                    currentItem.classList.remove('active');
+                    currentItem.classList.add('exit');
+
+                    currentIndex = (currentIndex + 1) % items.length;
+                    const nextItem = items[currentIndex];
+                    
+                    nextItem.classList.remove('exit');
+                    // Paksa refresh DOM / Trigger Reflow
+                    void nextItem.offsetWidth; 
+                    nextItem.classList.add('active');
+                }, 5000);
+            });
         });
     </script>
 </body>
